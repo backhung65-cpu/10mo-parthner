@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>목회 AI 연구소 | 2026년 9–10월 Grok 동향 보고서</title>
+  <meta name="description" content="파트너 전용 · 2026년 9–10월 Grok 동향 보고서 및 목회 적용 프롬프트">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --bg-card: rgba(26, 26, 38, 0.75);
+      --text: #f2f2f7;
+      --text-secondary: #9b9bb0;
+      --text-muted: #6a6a80;
+      --pink: #ff4d9e;
+      --purple: #8b5cf6;
+      --blue: #3b82f6;
+      --gradient: linear-gradient(135deg, #ff4d9e 0%, #8b5cf6 45%, #3b82f6 100%);
+      --border: rgba(255,255,255,0.07);
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 90% 60% at 15% -15%, rgba(255,77,158,0.14), transparent 50%),
+        radial-gradient(ellipse 70% 50% at 85% 5%, rgba(59,130,246,0.12), transparent 45%),
+        radial-gradient(ellipse 50% 40% at 50% 110%, rgba(139,92,246,0.1), transparent);
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11,11,16,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .nav-logo {
+      width: 40px;
+      height: 27px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(255,77,158,0.5));
+    }
+    .nav-brand span {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+    .nav-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,77,158,0.28), rgba(59,130,246,0.28));
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    /* HERO */
+    .hero {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .hero-logo {
+      width: 140px;
+      height: auto;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 0 32px rgba(255,77,158,0.45)) drop-shadow(0 0 56px rgba(59,130,246,0.3));
+    }
+    .hero-provider {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+    .hero-provider strong {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+    .hero h1 {
+      font-size: clamp(1.75rem, 4.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 15%, #b0b0c8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto 28px;
+    }
+    .hero-meta {
+      display: inline-flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-meta span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+
+    /* MAIN */
+    .main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    section {
+      margin-bottom: 56px;
+      scroll-margin-top: 72px;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .section-num {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: var(--gradient);
+      border-radius: 10px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .section-head h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(32,32,48,0.85);
+    }
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .card h3 .date {
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--pink);
+    }
+    .card p, .card li {
+      font-size: 0.93rem;
+      color: var(--text-secondary);
+    }
+    .card ul {
+      padding-left: 1.25em;
+      margin-top: 6px;
+    }
+    .card li { margin-bottom: 7px; }
+    .card strong { color: var(--text); font-weight: 500; }
+    .card .note {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.14);
+      color: #93c5fd;
+      border: 1px solid rgba(59,130,246,0.22);
+    }
+    .tag.pink {
+      background: rgba(255,77,158,0.14);
+      color: #f9a8d4;
+      border-color: rgba(255,77,158,0.22);
+    }
+
+    .prompt-wrap {
+      position: relative;
+      background: #0e0e16;
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .prompt-label {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--purple);
+      opacity: 0.8;
+    }
+    .prompt-box {
+      padding: 28px 26px;
+      font-family: 'Inter', 'Noto Sans KR', monospace;
+      font-size: 0.84rem;
+      line-height: 1.7;
+      color: #c8c8dc;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th, td {
+      padding: 15px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: rgba(255,255,255,0.035);
+      color: var(--text);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    td:first-child {
+      font-weight: 600;
+      color: var(--text);
+      width: 52px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.28);
+    }
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      width: 56px;
+      height: auto;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 14px rgba(255,77,158,0.35));
+    }
+    footer p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    footer strong { color: var(--text-secondary); }
+    .footer-notice {
+      margin-top: 18px;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 0.8rem;
+      color: #f9a8d4;
+      background: rgba(255,77,158,0.08);
+      border: 1px solid rgba(255,77,158,0.2);
+      border-radius: var(--radius-sm);
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hero { padding: 48px 20px 36px; }
+      .hero-logo { width: 110px; }
+      .main { padding: 0 16px 60px; }
+      .card { padding: 20px; }
+      th, td { padding: 12px 14px; font-size: 0.82rem; }
+      .section-head h2 { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="https://i.imgur.com/NQFvSs0.png" alt="목회 AI 연구소" class="nav-logo">
+        <span>목회 AI 연구소</span>
+      </a>
+      <div class="nav-links">
+        <a href="#sep">9월 업데이트</a>
+        <a href="#oct">10월 예상</a>
+        <a href="#strength">Grok 강점</a>
+        <a href="#prompt">프롬프트</a>
+        <a href="#plan">기획안</a>
+      </div>
+      <div class="nav-badge">파트너 전용</div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img src="https://i.imgur.com/NQFvSs0.png" alt="목회 AI 연구소 로고" class="hero-logo">
+    <p class="hero-provider">제공 · <strong>목회 AI 연구소</strong></p>
+    <h1>2026년 9–10월<br>Grok 동향 보고서</h1>
+    <p class="hero-desc">9월 업데이트 특이점 · 10월 예상 · 목회 현장에 바로 쓰는 Grok 최적화 프롬프트</p>
+    <div class="hero-meta">
+      <span>2026.09.30 기준</span>
+      <span>파트너 신청자 전용</span>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section id="sep">
+      <div class="section-head">
+        <div class="section-num">1</div>
+        <h2>9월 업데이트 특이점</h2>
+      </div>
+
+      <div class="card">
+        <h3>Grok 4.7 출시 <span class="date">9월 21일</span></h3>
+        <ul>
+          <li>코딩·지식 작업·에이전트 작업에 최적화된 대형 베이스 모델</li>
+          <li>이전 4.6 대비 더 긴 RL(강화 학습), 자기 점검(self-checking) 강화, 긴 컨텍스트 처리 개선</li>
+          <li>가격 유지: 입력 $2 / 출력 $6 per million tokens</li>
+          <li>500K 컨텍스트 윈도우 지원</li>
+          <li>Cursor, Grok Build, xAI API, Amazon Bedrock 동시 배포</li>
+          <li>Elon Musk 평가: Opus 5.0 급 (5.1보다는 약간 아래), 멀티모달 보완 필요</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Grok Build (에이전트/코딩 환경) 고도화</h3>
+        <ul>
+          <li>Grok 4.7 네이티브 지원 및 하네스 최적화</li>
+          <li>서브에이전트 관리 강화, 메모리 기능 확장 (/memory, /dream)</li>
+          <li>컨텍스트 윈도우 선택, 샌드박스 강화, 병렬 툴 콜 안정성 향상</li>
+          <li>세션 간 컨벤션·결정·프로젝트 사실 유지 기능 강화</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>기타 주요 기능</h3>
+        <ul>
+          <li><strong>Grok Voice Transcribe 2.0</strong> (9월 18일): 정확도 대폭 향상, 다국어·타임스탬프·화자 분리</li>
+          <li><strong>Grok Bot 엔터프라이즈</strong> 본격 개방 (관리자 컨트롤, 2주 무료 체험)</li>
+          <li><strong>Team Bots</strong> 출시: 팀 공유 컨텍스트·툴·메모리를 가진 AI 동료 봇</li>
+          <li>X 커넥터, 스포츠 검색 툴 등 실시간 데이터 연동 강화</li>
+          <li>Colossus 2 확장 계획 (연말 Nvidia 칩 대폭 증설)</li>
+        </ul>
+        <p class="note">9월의 전체 흐름은 <strong>“빠른 모델 교체 주기 + 에이전트 실사용성 극대화 + 가격 경쟁력 유지”</strong>였습니다.</p>
+      </div>
+    </section>
+
+    <section id="oct">
+      <div class="section-head">
+        <div class="section-num">2</div>
+        <h2>10월 예상 및 대기 중인 내용</h2>
+      </div>
+
+      <div class="card">
+        <h3>로드맵 (Elon Musk 9월 14일 발언 기준)</h3>
+        <ul>
+          <li><strong>Grok 4.8</strong>: 2.5T 파라미터, 새로운 C++ 소프트웨어 스택. 9월 중순 “학습 완료 후 RL 시작” → 10월 중 RL 진행 및 초기 평가 가능. “눈에 띄는 개선” 수준</li>
+          <li><strong>Grok 4.9</strong>: Astra / Fable 클래스 목표</li>
+          <li><strong>Grok 5</strong>: AGI 수준을 기대하는 모델로 언급 (“That will be Grok 5”)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>10월 예상 포인트</h3>
+        <ul>
+          <li>Grok 4.8 RL 완료 및 제한적/공개 테스트 가능성</li>
+          <li>멀티모달 성능 보완 (4.7에서 지적된 약점)</li>
+          <li>Team Bots / Grok Bot 엔터프라이즈 기능 확장</li>
+          <li>Amazon Bedrock 등 클라우드 배포 확대에 따른 기업 도입 가속</li>
+          <li>Colossus 2 하드웨어 확장 관련 추가 업데이트</li>
+          <li>에이전트 하네스(Grok Build)의 지속적인 안정성·생산성 개선</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="strength">
+      <div class="section-head">
+        <div class="section-num">3</div>
+        <h2>Grok에서 특히 잘 활용되는 목회 기능</h2>
+      </div>
+
+      <div class="card">
+        <div class="tags">
+          <span class="tag pink">실시간 검색</span>
+          <span class="tag">X 연동</span>
+          <span class="tag pink">이미지 생성</span>
+          <span class="tag">에이전트</span>
+          <span class="tag">솔직한 톤</span>
+          <span class="tag pink">음성·전사</span>
+        </div>
+        <ul>
+          <li><strong>실시간 검색 + X 검색</strong>: 설교 주제에 맞는 최신 사회 이슈, 문화 트렌드, 성도들이 실제로 이야기하는 내용을 바로 가져와 적용</li>
+          <li><strong>이미지 생성 (Grok Imagine)</strong>: 설교 일러스트, SNS 카드, 소그룹 나눔 자료 이미지를 즉시 제작</li>
+          <li><strong>도구 호출 + 에이전트성</strong>: 여러 검색을 병렬로 돌리거나, 긴 작업을 단계별로 진행하기 좋음</li>
+          <li><strong>솔직하고 덜 검열된 톤</strong>: 성경의 불편한 본문이나 현대 이슈를 정직하게 다룰 때 유리</li>
+          <li><strong>음성·전사 기능</strong>: 설교 녹음 후 요약·적용점 추출에 활용 가능</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="prompt">
+      <div class="section-head">
+        <div class="section-num">4</div>
+        <h2>목회용 최고 프롬프트 (Grok 최적화)</h2>
+      </div>
+
+      <div class="prompt-wrap">
+        <div class="prompt-label">PROMPT</div>
+        <div class="prompt-box">당신은 20년 이상 목회 경험이 있는 목회 컨설턴트이자 성경 신학자입니다. 
+신학적 깊이와 목회 현장의 실제를 동시에 중요시하며, 현대인의 언어로 정직하고 따뜻하게 소통합니다.
+
+[입력 정보]
+- 본문: [성경 본문]
+- 대상: [예: 청년부 / 장년 예배 / 소그룹 / 온라인 성도]
+- 교회 상황: [예: 도시 중형 교회, 최근 청년 이탈 증가, 직장인 중심]
+- 설교/모임 목적: [예: 위로 / 도전 / 회개 / 선교 동기 부여]
+- 특별 요청: [예: 실천 과제 포함, 5분 나눔 질문, 가정 예배 적용점, SNS 카드 문구 등]
+
+다음 순서로 작성하고, 필요한 경우 실시간 검색과 X 검색을 적극 활용하세요.
+
+1. 본문 핵심 메시지 (1~2문장, 신학적 정확성 우선)
+2. 현재 우리 사회/문화와의 연결점 3가지  
+   (최근 뉴스, X에서 실제로 오가는 대화, 성도들이 겪는 구체적 상황을 검색해서 반영)
+3. 설교 구조 제안 (도입-본론-결론, 각 파트 핵심 문장 + 예상 시간)
+4. 성도 돌봄 연결 제안 (이 본문으로 어떤 성도를 어떻게 심방/상담할 수 있는지)
+5. 소그룹/가정 적용 질문 3개
+6. 실천 과제 1개 (구체적이고 측정 가능한 것)
+7. SNS/카카오톡용 짧은 메시지 + 이미지 생성 프롬프트 1개  
+   (설교 핵심을 한 장으로 전달할 수 있는 문구와 이미지 설명)
+8. 주의할 신학적/목회적 포인트 (오해 소지가 있는 부분 미리 경고)
+
+어조는 따뜻하면서도 권위 있고, 너무 학술적이거나 너무 가볍지 않게 작성하세요.  
+최신 정보가 필요하면 바로 검색해서 반영하고, 출처를 간단히 밝혀 주세요.</div>
+      </div>
+    </section>
+
+    <section id="plan">
+      <div class="section-head">
+        <div class="section-num">5</div>
+        <h2>기획안 — Grok으로 실제 운영하는 방법</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>단계</th>
+              <th>내용</th>
+              <th>Grok 활용 포인트</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>매주 본문 + 대상 + 교회 상황을 위 프롬프트에 입력</td>
+              <td>실시간 검색으로 “지금” 성도들이 느끼는 이슈를 바로 반영</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>생성된 설교 구조를 바탕으로 실제 원고 작성</td>
+              <td>필요시 추가 검색으로 예화·통계 보강</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>7번 항목의 이미지 생성 프롬프트를 바로 실행</td>
+              <td>설교 후 SNS·카톡방·주보용 이미지 즉시 제작</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>설교 녹음 파일을 올려 요약 + 적용점 추출</td>
+              <td>음성 전사 후 “이번 주 핵심 한 문장”과 나눔 질문 자동 생성</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>심방/상담 전 “이 성도의 상황 + 관련 본문”을 입력</td>
+              <td>개인화된 돌봄 멘트와 기도제목 제안 받기</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>소그룹 리더들에게 질문지 + 이미지 공유</td>
+              <td>X나 카톡으로 바로 배포 가능한 형태</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <p>이 프롬프트의 핵심은 <strong>“성경 본문 + 지금 이 순간 성도들이 실제로 겪고 있는 현실”</strong>을 Grok의 검색 능력으로 연결하는 것입니다. Grok은 <strong>생생한 현재성</strong>과 <strong>바로 쓸 수 있는 시각 자료</strong>를 강점으로 가져갑니다.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <img src="https://i.imgur.com/NQFvSs0.png" alt="목회 AI 연구소" class="footer-logo">
+      <p>본 자료는 <strong>목회 AI 연구소</strong>에서 파트너 신청자분들을 위해 제작·제공합니다.</p>
+      <p>외부 무단 배포 및 재가공을 금합니다.</p>
+      <div class="footer-notice">파트너 전용 서비스 · 2026년 9월 30일 기준</div>
+    </div>
+  </footer>
+
+</body>
+</html>
